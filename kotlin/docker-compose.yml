@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  build:
+    image: fvbakel/kotlin-native
+    volumes:
+      - .:/src
+    working_dir: /src
+    entrypoint: "kotlinc-native compute-kt.kt -target wasm32 -o build/compute-kt"

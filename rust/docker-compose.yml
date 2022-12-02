@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  build:
+    image: rnsloan/wasm-pack
+    volumes:
+      - .:/src
+    working_dir: /src
+    entrypoint: "wasm-pack build --out-dir build"
