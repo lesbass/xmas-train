@@ -5,5 +5,22 @@
     <title>WebAssembly Kotlin Demo</title></head>
 <body>
 <script wasm="compute-kt.wasm" src="compute-kt.wasm.js"></script>
+
+<script>
+    const initFn = new Promise((resolve) => {
+        setTimeout(() => {
+            const fn = {}
+            for (name in instance.exports) {
+                if (name.startsWith("kfun:")) {
+                    fn_name = name.substring(6, name.indexOf("("));
+                    fn[fn_name] = instance.exports[name];
+                }
+            }
+            resolve(fn)
+        }, 100)
+    })
+
+    initFn.then(fn => console.log(fn.add(1, 2)))
+</script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WELCOME TO XMAS TRAIN!</title>
+    <script wasm="./kotlin/build/compute-kt.wasm" src="./kotlin/build/compute-kt.wasm.js"></script>
+
+    <script type="module">
+        import {add} from "./assemblyscript/build/release.js";
+        import {addKt} from "./kotlin/compute.js";
+
+        document.getElementById("as-result").innerText = add(1, 2);
+        document.getElementById("kt-result").innerText = await addKt(3, 4);
+    </script>
+    <script type='module' src="./dotnet/build/main.js"></script>
+</head>
+<body>
+<h1>WELCOME TO XMAS TRAIN!</h1>
+
+<h2>AssemblyScript</h2>
+<div id="as-result"></div>
+
+<h2>Dotnet</h2>
+<div id="out"></div>
+
+<h2>Kotlin</h2>
+<div id="kt-result"></div>
+
+</body>
+</html>
