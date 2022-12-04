@@ -1,18 +1,13 @@
 using System;
 using System.Runtime.InteropServices.JavaScript;
 
-Console.WriteLine("Hello, Browser!");
+Console.WriteLine("Dotnet started!");
 
 public partial class MyClass
 {
     [JSExport]
-    internal static string Greeting()
+    internal static double Divide(double a, double b)
     {
-        var text = $"Hello, World! Greetings from {GetHRef()}";
-        Console.WriteLine(text);
-        return text;
+        return a / b;
     }
-
-    [JSImport("window.location.href", "main.js")]
-    internal static partial string GetHRef();
 }
