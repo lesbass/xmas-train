@@ -2,6 +2,7 @@
 
 WASM modules in several languages.
 * AssemblyScript
+* C++
 * .NET C#
 * Kotlin
 
@@ -11,7 +12,6 @@ WASM modules in several languages.
 Just run `make` in the terminal.
 
 ### Future ideas
-* C++
 * PHP
 * Rust
 

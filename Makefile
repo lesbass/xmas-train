@@ -1,7 +1,7 @@
 run: build-all
 	dotnet serve
 
-build-all: build-as build-dotnet build-kt
+build-all: build-as build-dotnet build-kt build-cpp
 
 build-kt:
 	cd kotlin && docker compose up

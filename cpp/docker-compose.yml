@@ -5,4 +5,4 @@ services:
     volumes:
       - .:/src
     working_dir: /src
-    entrypoint: "emcc compute-cpp.c -o build/compute-cpp.html"
+    entrypoint: "emcc compute-cpp.cpp -o build/compute-cpp.html --std=c++11 -s \"EXPORTED_FUNCTIONS=['_square']\""
