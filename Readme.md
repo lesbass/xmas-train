@@ -5,6 +5,8 @@ WASM modules in several languages.
 * .NET C#
 * Kotlin
 
+<img alt="" src="https://i.imgur.com/5AuI9Dt.png" />
+
 ## How to run
 Just run `make` in the terminal.
 
