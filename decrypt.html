@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>WELCOME TO WASM CALCULATOR!</title>
+    <script wasm="./kotlin/build/compute-kt.wasm" src="./kotlin/build/compute-kt.wasm.js"></script>
+    <script src="./cpp/build/compute-cpp.js"></script>
+    <script type="module">
+        import {decryptAs} from "./assemblyscript/build/release.js";
+        import {decryptKt} from "./kotlin/compute.js";
+        import {decryptCs} from "./dotnet/build/compute.js";
+
+        const compute = async () => {
+            const number = +document.getElementById("number").value
+            const asResult = decryptAs(number);
+            document.getElementById("as-result").innerText = "" + asResult
+
+            const cppResult = Module._decryptCpp(asResult);
+            document.getElementById("cpp-result").innerText = cppResult;
+
+            const ktResult = await decryptKt(cppResult, 5);
+            document.getElementById("kt-result").innerText = ktResult;
+
+            const dotnetResult = decryptCs(ktResult, 3);
+            document.getElementById("dotnet-result").innerText = dotnetResult;
+        }
+
+        document.getElementById("compute").addEventListener("click", compute)
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h1>WELCOME TO WASM CALCULATOR!</h1>
+
+            <label>Your number: <input type="number" id="number"/></label>
+            <button id="compute" class="btn btn-primary">Do the math!</button>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/0/00/AssemblyScript_logo_2020.svg"
+                            height="20"/>
+                    <span class="badge badge-secondary">AssemblyScript</span> Multiply x 2</h5>
+                <p class="card-text" id="as-result">??</p>
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"
+                            height="20"/>
+                    <span class="badge badge-secondary">C++</span> Square the number</h5>
+                <p class="card-text" id="cpp-result">??</p>
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kotlin_Icon.svg/1024px-Kotlin_Icon.svg.png?20171012085709"
+                            height="20"/>
+                    <span class="badge badge-secondary">Kotlin</span> Add 5</h5>
+                <p class="card-text" id="kt-result">??</p>
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Microsoft_.NET_logo.png?20200524033331"
+                            height="20"/>
+                    <span class="badge badge-secondary">Dotnet</span> Divide by 3</h5>
+                <p class="card-text" id="dotnet-result">??</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

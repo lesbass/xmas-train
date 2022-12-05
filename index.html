@@ -11,83 +11,130 @@
         import {decryptKt} from "./kotlin/compute.js";
         import {decryptCs} from "./dotnet/build/compute.js";
 
-        const compute = async () => {
-            const number = +document.getElementById("number").value
-            const asResult = decryptAs(number);
-            document.getElementById("as-result").innerText = "" + asResult
+        const inputCount = 1
+        let data = []
 
-            const cppResult = Module._decryptCpp(asResult);
-            document.getElementById("cpp-result").innerText = cppResult;
+        const buildCharDiv = (numberArray) => {
+            console.log(numberArray)
+            const charArray = numberArray.map(it => String.fromCharCode(+it))
 
-            const ktResult = await decryptKt(cppResult, 5);
-            document.getElementById("kt-result").innerText = ktResult;
+            const div = document.createElement("div")
+            charArray.forEach(it => {
+                const resDiv = document.createElement("div")
+                resDiv.className = "res-div"
+                resDiv.innerHTML = it
 
-            const dotnetResult = decryptCs(ktResult, 3);
-            document.getElementById("dotnet-result").innerText = dotnetResult;
+                div.appendChild(resDiv)
+            })
+
+            return div
         }
 
-        document.getElementById("compute").addEventListener("click", compute)
+        const readData = () => {
+            data = Array.from(document.getElementsByClassName("magic-input")).map(it => it.value)
+
+            document.getElementById("plain").innerHTML = ""
+            document.getElementById("plain").appendChild(buildCharDiv(data))
+        }
+
+        const inputContainer = document.getElementById("inputs")
+        for (let i = 0; i < inputCount; i++) {
+            const input = document.createElement("input")
+            input.setAttribute("type", "text")
+            input.className = "magic-input"
+
+            input.addEventListener("blur", readData)
+
+            inputContainer.appendChild(input)
+        }
+
+        const asDecrypter = document.getElementById("as-decrypter")
+        const cppDecrypter = document.getElementById("cpp-decrypter")
+        const ktDecrypter = document.getElementById("kt-decrypter")
+        const csDecrypter = document.getElementById("cs-decrypter")
+
+        const applyDecrypt = async (el, fn, resultId) => {
+            el.setAttribute("disabled", "disabled")
+            data = await Promise.all(data.map(fn))
+            document.getElementById(resultId).innerHTML = ""
+            document.getElementById(resultId).appendChild(buildCharDiv(data))
+        }
+
+        asDecrypter.addEventListener("click", () => applyDecrypt(asDecrypter, decryptAs, "as-result"))
+        cppDecrypter.addEventListener("click", () => applyDecrypt(cppDecrypter, Module._decryptCpp, "cpp-result"))
+        ktDecrypter.addEventListener("click", () => applyDecrypt(ktDecrypter, async it => await decryptKt(it, 5), "kt-result"))
+        csDecrypter.addEventListener("click", () => applyDecrypt(csDecrypter, it => decryptCs(it, 3), "cs-result"))
     </script>
+
+    <style>
+        .magic-input, .res-div {
+            width: 80px;
+            font-size: 30px;
+            margin-right: 10px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .res-div {
+            font-size: 20px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            height: 2em;
+            background: lightgoldenrodyellow;
+        }
+
+        #cs-result div{
+            background: red;
+            color: white;
+            font-weight: bold;
+        }
+
+        #plain, #inputs {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <h1>WELCOME TO WASM CALCULATOR!</h1>
-
-            <label>Your number: <input type="number" id="number"/></label>
-            <button id="compute" class="btn btn-primary">Do the math!</button>
-        </div>
+    <div class="">
+        <h1>WELCOME TO THE MAGIC WASM DECRYPTER!</h1>
     </div>
-    <div class="row py-2">
-        <div class="card" style="width: 100%;">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/0/00/AssemblyScript_logo_2020.svg"
-                            height="20"/>
-                    <span class="badge badge-secondary">AssemblyScript</span> Multiply x 2</h5>
-                <p class="card-text" id="as-result">??</p>
-            </div>
-        </div>
+    <div class=" py-2">
+        <div id="inputs"></div>
     </div>
-    <div class="row py-2">
-
-        <div class="card" style="width: 100%;">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"
-                            height="20"/>
-                    <span class="badge badge-secondary">C++</span> Square the number</h5>
-                <p class="card-text" id="cpp-result">??</p>
-            </div>
-        </div>
+    <div class=" py-2">
+        <div id="plain"></div>
     </div>
-    <div class="row py-2">
-        <div class="card" style="width: 100%;">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kotlin_Icon.svg/1024px-Kotlin_Icon.svg.png?20171012085709"
-                            height="20"/>
-                    <span class="badge badge-secondary">Kotlin</span> Add 5</h5>
-                <p class="card-text" id="kt-result">??</p>
-            </div>
-        </div>
+    <div class=" py-2">
+        <button class="btn btn-primary" id="as-decrypter">Apply <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/00/AssemblyScript_logo_2020.svg"
+                height="20"/> Decrypter!
+        </button>
+        <div id="as-result" style="margin-top: 10px"></div>
     </div>
-    <div class="row py-2">
-
-        <div class="card" style="width: 100%;">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Microsoft_.NET_logo.png?20200524033331"
-                            height="20"/>
-                    <span class="badge badge-secondary">Dotnet</span> Divide by 3</h5>
-                <p class="card-text" id="dotnet-result">??</p>
-            </div>
-        </div>
+    <div class=" py-2">
+        <button class="btn btn-primary" id="cpp-decrypter">Apply
+            <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"
+                    height="20"/> Decrypter!
+        </button>
+        <div id="cpp-result" style="margin-top: 10px"></div>
+    </div>
+    <div class=" py-2">
+        <button class="btn btn-primary" id="kt-decrypter">Apply
+            <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kotlin_Icon.svg/1024px-Kotlin_Icon.svg.png?20171012085709"
+                    height="20"/> Decrypter!
+        </button>
+        <div id="kt-result" style="margin-top: 10px"></div>
+    </div>
+    <div class=" py-2">
+        <button class="btn btn-primary" id="cs-decrypter">Apply
+            <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Microsoft_.NET_logo.png?20200524033331"
+                    height="20"/> Decrypter!
+        </button>
+        <div id="cs-result" style="margin-top: 10px"></div>
     </div>
 </div>
 
