@@ -1,7 +1,12 @@
 #include<iostream>
 using namespace std;
+
 extern "C" {
-    int square(int n) {
-       return n * n;
+    int decryptCpp(int n) {
+       return n - 10;
+    }
+
+    int encryptCpp(int n) {
+       return n + 10;
     }
 }

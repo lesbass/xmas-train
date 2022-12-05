@@ -10,6 +10,7 @@ const {getAssemblyExports, getConfig} = await dotnet
 
 const config = getConfig();
 const exports = await getAssemblyExports(config.mainAssemblyName);
-export const divide = exports.MyClass.Divide;
+export const decryptCs = exports.MyClass.Decrypt;
+export const encryptCs = exports.MyClass.Encrypt;
 
 await dotnet.run();

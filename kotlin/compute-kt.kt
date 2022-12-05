@@ -3,11 +3,11 @@ fun main() {
 }
 
 @Retain
-fun add(a: Int, b: Int): Int {
+fun decrypt(a: Int, b: Int): Int {
     return a + b
 }
 
 @Retain
-fun hello() {
-    println("Hello from Kotlin")
+fun encrypt(a: Int, b: Int): Int {
+    return a - b
 }
