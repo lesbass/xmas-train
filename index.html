@@ -11,8 +11,25 @@
         import {decryptKt} from "./kotlin/compute.js";
         import {decryptCs} from "./dotnet/build/compute.js";
 
-        const inputCount = 1
+        const inputCount = 28
         let data = []
+
+        const addSnow = () => {
+            const appendDivToBody = (cn)=> {
+                const div = document.createElement("div")
+                div.className = cn
+                document.getElementById("body").appendChild(div)
+            }
+
+            appendDivToBody("snow foreground")
+            appendDivToBody("snow foreground layered")
+            appendDivToBody("snow middleground")
+            appendDivToBody("snow middleground layered")
+            appendDivToBody("snow background")
+            appendDivToBody("snow background layered")
+
+            document.getElementById("body").className = "snow-container"
+        }
 
         const buildCharDiv = (numberArray) => {
             console.log(numberArray)
@@ -22,7 +39,10 @@
             charArray.forEach(it => {
                 const resDiv = document.createElement("div")
                 resDiv.className = "res-div"
-                resDiv.innerHTML = it
+                if(!it || !it.trim() || it === "\u0000")
+                    resDiv.innerHTML = "&nbsp;"
+                else
+                    resDiv.innerHTML = it
 
                 div.appendChild(resDiv)
             })
@@ -63,14 +83,18 @@
         asDecrypter.addEventListener("click", () => applyDecrypt(asDecrypter, decryptAs, "as-result"))
         cppDecrypter.addEventListener("click", () => applyDecrypt(cppDecrypter, Module._decryptCpp, "cpp-result"))
         ktDecrypter.addEventListener("click", () => applyDecrypt(ktDecrypter, async it => await decryptKt(it, 5), "kt-result"))
-        csDecrypter.addEventListener("click", () => applyDecrypt(csDecrypter, it => decryptCs(it, 3), "cs-result"))
+        csDecrypter.addEventListener("click", () => {
+            applyDecrypt(csDecrypter, it => decryptCs(it, 3), "cs-result")
+            addSnow()
+        })
     </script>
 
     <style>
         .magic-input, .res-div {
-            width: 80px;
-            font-size: 30px;
+            width: 60px;
+            font-size: 25px;
             margin-right: 10px;
+            bottom: 10px;
             display: inline-block;
             text-align: center;
         }
@@ -84,20 +108,95 @@
         }
 
         #cs-result div{
-            background: red;
+            background: transparent;
             color: white;
             font-weight: bold;
+            font-size: 50px;
         }
 
         #plain, #inputs {
             display: block;
         }
+
+        .snow-container {
+            position: absolute;
+            height: 500px;
+            width: 100%;
+            max-width: 100%;
+            top: 0;
+            overflow: hidden;
+            z-index: 2;
+            pointer-events: none;
+            background-color: red;
+        }
+
+        .snow {
+            display: block;
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+            transform: translate3d(0, -100%, 0);
+            -webkit-animation: snow linear infinite;
+            animation: snow linear infinite;
+        }
+        .snow.foreground {
+            background-image: url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-large-075d267ecbc42e3564c8ed43516dd557.png");
+            -webkit-animation-duration: 15s;
+            animation-duration: 15s;
+        }
+        .snow.foreground.layered {
+            -webkit-animation-delay: 7.5s;
+            animation-delay: 7.5s;
+        }
+        .snow.middleground {
+            background-image: image-url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-medium-0b8a5e0732315b68e1f54185be7a1ad9.png");
+            -webkit-animation-duration: 20s;
+            animation-duration: 20s;
+        }
+        .snow.middleground.layered {
+            -webkit-animation-delay: 10s;
+            animation-delay: 10s;
+        }
+        .snow.background {
+            background-image: image-url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-small-1ecd03b1fce08c24e064ff8c0a72c519.png");
+            -webkit-animation-duration: 30s;
+            animation-duration: 30s;
+        }
+        .snow.background.layered {
+            -webkit-animation-delay: 15s;
+            animation-delay: 15s;
+        }
+
+        @-webkit-keyframes snow {
+            0% {
+                transform: translate3d(0, -100%, 0);
+            }
+            100% {
+                transform: translate3d(15%, 100%, 0);
+            }
+        }
+
+        @keyframes snow {
+            0% {
+                transform: translate3d(0, -100%, 0);
+            }
+            100% {
+                transform: translate3d(15%, 100%, 0);
+            }
+        }
+        h1{
+            text-align: center;
+        }
     </style>
 </head>
-<body>
-<div class="container">
+<body id="body" class="">
+<div class="" style="padding: 10px">
     <div class="">
-        <h1>WELCOME TO THE MAGIC WASM DECRYPTER!</h1>
+        <h1>&#127876; WELCOME TO THE MAGIC WASM DECRYPTER! &#127876;</h1>
     </div>
     <div class=" py-2">
         <div id="inputs"></div>
