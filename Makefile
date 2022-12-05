@@ -19,3 +19,6 @@ build-dotnet:
 	cd dotnet && docker compose up
 	mv dotnet/temp/AppBundle dotnet/build
 	rm -r dotnet/temp dotnet/obj
+
+serve:
+	dotnet serve --port 8080 --open-browser

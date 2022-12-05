@@ -11,14 +11,55 @@
         import {encryptKt} from "./kotlin/compute.js";
         import {encryptCs} from "./dotnet/build/compute.js";
 
+        const plainText = "WE WISH YOU A MERRY XMASDEV!"
+
+        const result = await Promise.all(plainText.split("").map(async (char, index) => {
+            const number = char.charCodeAt(0)
+
+            const dotnetResult = encryptCs(number, 3);
+
+            const ktResult = await encryptKt(dotnetResult, 5);
+
+            const cppResult = Module._encryptCpp(ktResult);
+
+            const asResult = encryptAs(cppResult);
+
+            return {
+                char,
+                index,
+                step1: dotnetResult,
+                step2: ktResult,
+                step3: cppResult,
+                encrypted: asResult
+            }
+        }))
+
+        const firstRow = document.createElement("tr")
+        const secondRow = document.createElement("tr")
+        const thirdRow = document.createElement("tr")
+        for (let i = 0; i < result.length; i++) {
+            const el = result.find(it => it.index === i)
+            const plain = document.createElement("td");
+            plain.innerHTML = el.char
+            const encrypted = document.createElement("td");
+            encrypted.innerHTML = "" + el.encrypted
+            const encryptedChar = document.createElement("td");
+            encryptedChar.innerHTML = String.fromCharCode(el.encrypted)
+            firstRow.appendChild(plain)
+            secondRow.appendChild(encrypted)
+            thirdRow.appendChild(encryptedChar)
+        }
+        const table = document.getElementById("result")
+        table.appendChild(firstRow)
+        table.appendChild(secondRow)
+        table.appendChild(thirdRow)
+
+        console.log(result)
+
         const compute = async () => {
-            const number = +document.getElementById("number").value
-/*
-            const result = await Promise.resolve(number)
-                .then(n => encryptCs(n, 3))
-                .then(n => encryptKt(n, 5))
-                .then(n => Module._encryptCpp(n))
-                .then(n => encryptAs(n))*/
+            const char = document.getElementById("char1").value
+            const number = char.charCodeAt(0)
+            console.log(number)
 
             const dotnetResult = encryptCs(number, 3);
             document.getElementById("dotnet-result").innerText = dotnetResult;
@@ -35,6 +76,13 @@
 
         document.getElementById("compute").addEventListener("click", compute)
     </script>
+    <style>
+        td {
+            border: 1px solid red;
+            margin: 5px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -42,8 +90,8 @@
         <div class="col-sm">
             <h1>WELCOME TO WASM CALCULATOR!</h1>
 
-            <label>Your number: <input type="number" id="number"/></label>
-            <button id="compute" class="btn btn-primary">Do the math!</button>
+            <label>Your char: <input type="text" id="char1"/></label>
+            <button id="compute" class="btn btn-primary">Encrypt it!</button>
         </div>
     </div>
     <div class="row py-2">
@@ -54,7 +102,7 @@
                     <img
                             src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Microsoft_.NET_logo.png?20200524033331"
                             height="20"/>
-                    <span class="badge badge-secondary">Dotnet</span> Divide by 3</h5>
+                    <span class="badge badge-secondary">Dotnet</span></h5>
                 <p class="card-text" id="dotnet-result">??</p>
             </div>
         </div>
@@ -66,7 +114,7 @@
                     <img
                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kotlin_Icon.svg/1024px-Kotlin_Icon.svg.png?20171012085709"
                             height="20"/>
-                    <span class="badge badge-secondary">Kotlin</span> Add 5</h5>
+                    <span class="badge badge-secondary">Kotlin</span></h5>
                 <p class="card-text" id="kt-result">??</p>
             </div>
         </div>
@@ -79,7 +127,7 @@
                     <img
                             src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"
                             height="20"/>
-                    <span class="badge badge-secondary">C++</span> Square the number</h5>
+                    <span class="badge badge-secondary">C++</span></h5>
                 <p class="card-text" id="cpp-result">??</p>
             </div>
         </div>
@@ -92,8 +140,22 @@
                     <img
                             src="https://upload.wikimedia.org/wikipedia/commons/0/00/AssemblyScript_logo_2020.svg"
                             height="20"/>
-                    <span class="badge badge-secondary">AssemblyScript</span> Multiply x 2</h5>
+                    <span class="badge badge-secondary">AssemblyScript</span></h5>
                 <p class="card-text" id="as-result">??</p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row py-2">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span class="badge badge-secondary">ENCRYPTED</span></h5>
+                <table id="result" cellpadding="5">
+                    <tr></tr>
+                    <tr></tr>
+                </table>
             </div>
         </div>
     </div>
