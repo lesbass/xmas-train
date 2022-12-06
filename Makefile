@@ -12,9 +12,6 @@ build-as:
 build-cpp:
 	cd cpp && docker compose up
 
-build-rust:
-	cd rust && docker compose up
-
 build-dotnet:
 	cd dotnet && docker compose up
 	mv dotnet/temp/AppBundle dotnet/build
