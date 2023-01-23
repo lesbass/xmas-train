@@ -18,4 +18,4 @@ build-dotnet:
 	rm -r dotnet/temp dotnet/obj
 
 serve:
-	dotnet serve --port 8080 --open-browser
+	dotnet serve --port 8090 --open-browser

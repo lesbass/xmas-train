@@ -11,7 +11,7 @@
         import {encryptKt} from "./kotlin/compute.js";
         import {encryptCs} from "./dotnet/build/compute.js";
 
-        const plainText = "WE WISH YOU A MERRY XMASDEV!"
+        const plainText = "WASM IS AWSM!"
 
         const result = await Promise.all(plainText.split("").map(async (char, index) => {
             const number = char.charCodeAt(0)

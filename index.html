@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>&#127876; THE MAGIC WASM DECRYPTER! &#127876;</title>
+    <title>&#129668; THE MAGIC WASM DECRYPTER! &#129668;</title>
     <script wasm="./kotlin/build/compute-kt.wasm" src="./kotlin/build/compute-kt.wasm.js"></script>
     <script src="./cpp/build/compute-cpp.js"></script>
     <script type="module">
@@ -11,24 +11,11 @@
         import {decryptKt} from "./kotlin/compute.js";
         import {decryptCs} from "./dotnet/build/compute.js";
 
-        const inputCount = 28
+        const inputCount = 13
         let data = []
 
-        const addSnow = () => {
-            const appendDivToBody = (cn)=> {
-                const div = document.createElement("div")
-                div.className = cn
-                document.getElementById("body").appendChild(div)
-            }
-
-            appendDivToBody("snow foreground")
-            appendDivToBody("snow foreground layered")
-            appendDivToBody("snow middleground")
-            appendDivToBody("snow middleground layered")
-            appendDivToBody("snow background")
-            appendDivToBody("snow background layered")
-
-            document.getElementById("body").className = "snow-container"
+        const goPyro = () => {
+            document.getElementById("body").className = "go"
         }
 
         const buildCharDiv = (numberArray) => {
@@ -85,7 +72,7 @@
         ktDecrypter.addEventListener("click", () => applyDecrypt(ktDecrypter, async it => await decryptKt(it, 5), "kt-result"))
         csDecrypter.addEventListener("click", () => {
             applyDecrypt(csDecrypter, it => decryptCs(it, 3), "cs-result")
-            addSnow()
+            goPyro()
         })
     </script>
 
@@ -117,86 +104,240 @@
         #plain, #inputs {
             display: block;
         }
-
-        .snow-container {
-            position: absolute;
-            height: 500px;
-            width: 100%;
-            max-width: 100%;
-            top: 0;
+        body.go {
+            margin: 0;
+            padding: 0;
+            background: #000;
             overflow: hidden;
-            z-index: 2;
-            pointer-events: none;
-            background-color: red;
+            color: white;
         }
-
-        .snow {
-            display: block;
+        body.go .pyro{
             position: absolute;
-            z-index: 2;
+            width: 100%;
+            height: 100%;
             top: 0;
-            right: 0;
-            bottom: 0;
             left: 0;
-            pointer-events: none;
-            transform: translate3d(0, -100%, 0);
-            -webkit-animation: snow linear infinite;
-            animation: snow linear infinite;
         }
-        .snow.foreground {
-            background-image: url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-large-075d267ecbc42e3564c8ed43516dd557.png");
-            -webkit-animation-duration: 15s;
-            animation-duration: 15s;
+        body.go .pyro > .before,
+        body.go .pyro > .after {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
+            -moz-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+            -webkit-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+            -o-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+            -ms-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+            animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
         }
-        .snow.foreground.layered {
-            -webkit-animation-delay: 7.5s;
-            animation-delay: 7.5s;
+        body.go .pyro > .after {
+            -moz-animation-delay: 1.25s, 1.25s, 1.25s;
+            -webkit-animation-delay: 1.25s, 1.25s, 1.25s;
+            -o-animation-delay: 1.25s, 1.25s, 1.25s;
+            -ms-animation-delay: 1.25s, 1.25s, 1.25s;
+            animation-delay: 1.25s, 1.25s, 1.25s;
+            -moz-animation-duration: 1.25s, 1.25s, 6.25s;
+            -webkit-animation-duration: 1.25s, 1.25s, 6.25s;
+            -o-animation-duration: 1.25s, 1.25s, 6.25s;
+            -ms-animation-duration: 1.25s, 1.25s, 6.25s;
+            animation-duration: 1.25s, 1.25s, 6.25s;
         }
-        .snow.middleground {
-            background-image: image-url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-medium-0b8a5e0732315b68e1f54185be7a1ad9.png");
-            -webkit-animation-duration: 20s;
-            animation-duration: 20s;
-        }
-        .snow.middleground.layered {
-            -webkit-animation-delay: 10s;
-            animation-delay: 10s;
-        }
-        .snow.background {
-            background-image: image-url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-small-1ecd03b1fce08c24e064ff8c0a72c519.png");
-            -webkit-animation-duration: 30s;
-            animation-duration: 30s;
-        }
-        .snow.background.layered {
-            -webkit-animation-delay: 15s;
-            animation-delay: 15s;
-        }
-
-        @-webkit-keyframes snow {
-            0% {
-                transform: translate3d(0, -100%, 0);
-            }
-            100% {
-                transform: translate3d(15%, 100%, 0);
+        @-webkit-keyframes bang {
+            to {
+                box-shadow: -209px -87.6666666667px #3300ff, 137px -70.6666666667px #ff0055, -81px -52.6666666667px #d5ff00, 84px -110.6666666667px #ff0004, 67px -412.6666666667px #ff1e00, 78px -333.6666666667px #0022ff, 128px -276.6666666667px #11ff00, -139px -159.6666666667px #ff2f00, -151px 30.3333333333px #c8ff00, -212px -122.6666666667px #ff8400, -88px -259.6666666667px #7700ff, 149px -237.6666666667px #0033ff, -18px -228.6666666667px #aeff00, -167px -201.6666666667px #ccff00, -216px -196.6666666667px #00ffd9, 64px -188.6666666667px #00ff95, -158px -287.6666666667px #ff0d00, -238px -117.6666666667px #00c4ff, 194px -34.6666666667px #fff700, -73px -388.6666666667px #ff008c, -246px -189.6666666667px #bb00ff, -8px -410.6666666667px #0040ff, 214px -223.6666666667px #00ff15, 136px -357.6666666667px blue, 183px 4.3333333333px #00ff40, -38px 76.3333333333px #b700ff, -44px -167.6666666667px #00fff7, 70px -315.6666666667px #ff0015, 189px -249.6666666667px #00e6ff, 174px -150.6666666667px #ff0055, -160px -302.6666666667px #ffd900, -244px -200.6666666667px #26ff00, -26px 70.3333333333px #ff002b, 31px 5.3333333333px #4d00ff, -110px 31.3333333333px #00ffd0, -208px -326.6666666667px #7300ff, 218px -212.6666666667px #ff009d, 122px -344.6666666667px #eaff00, -223px 36.3333333333px #00ffcc, -234px -272.6666666667px #006aff, 73px -302.6666666667px #00ff8c, 248px -70.6666666667px #00ff62, -121px -357.6666666667px #00ffea, -199px -95.6666666667px #04ff00, -202px -255.6666666667px #004dff, -33px -206.6666666667px #0015ff, 136px -204.6666666667px #ddff00, 99px -128.6666666667px #3cff00, -193px -205.6666666667px #ff0059, -61px -337.6666666667px #00eaff, -233px -35.6666666667px #ff0033;
             }
         }
-
-        @keyframes snow {
-            0% {
-                transform: translate3d(0, -100%, 0);
+        @-moz-keyframes bang {
+            to {
+                box-shadow: -209px -87.6666666667px #3300ff, 137px -70.6666666667px #ff0055, -81px -52.6666666667px #d5ff00, 84px -110.6666666667px #ff0004, 67px -412.6666666667px #ff1e00, 78px -333.6666666667px #0022ff, 128px -276.6666666667px #11ff00, -139px -159.6666666667px #ff2f00, -151px 30.3333333333px #c8ff00, -212px -122.6666666667px #ff8400, -88px -259.6666666667px #7700ff, 149px -237.6666666667px #0033ff, -18px -228.6666666667px #aeff00, -167px -201.6666666667px #ccff00, -216px -196.6666666667px #00ffd9, 64px -188.6666666667px #00ff95, -158px -287.6666666667px #ff0d00, -238px -117.6666666667px #00c4ff, 194px -34.6666666667px #fff700, -73px -388.6666666667px #ff008c, -246px -189.6666666667px #bb00ff, -8px -410.6666666667px #0040ff, 214px -223.6666666667px #00ff15, 136px -357.6666666667px blue, 183px 4.3333333333px #00ff40, -38px 76.3333333333px #b700ff, -44px -167.6666666667px #00fff7, 70px -315.6666666667px #ff0015, 189px -249.6666666667px #00e6ff, 174px -150.6666666667px #ff0055, -160px -302.6666666667px #ffd900, -244px -200.6666666667px #26ff00, -26px 70.3333333333px #ff002b, 31px 5.3333333333px #4d00ff, -110px 31.3333333333px #00ffd0, -208px -326.6666666667px #7300ff, 218px -212.6666666667px #ff009d, 122px -344.6666666667px #eaff00, -223px 36.3333333333px #00ffcc, -234px -272.6666666667px #006aff, 73px -302.6666666667px #00ff8c, 248px -70.6666666667px #00ff62, -121px -357.6666666667px #00ffea, -199px -95.6666666667px #04ff00, -202px -255.6666666667px #004dff, -33px -206.6666666667px #0015ff, 136px -204.6666666667px #ddff00, 99px -128.6666666667px #3cff00, -193px -205.6666666667px #ff0059, -61px -337.6666666667px #00eaff, -233px -35.6666666667px #ff0033;
             }
-            100% {
-                transform: translate3d(15%, 100%, 0);
+        }
+        @-o-keyframes bang {
+            to {
+                box-shadow: -209px -87.6666666667px #3300ff, 137px -70.6666666667px #ff0055, -81px -52.6666666667px #d5ff00, 84px -110.6666666667px #ff0004, 67px -412.6666666667px #ff1e00, 78px -333.6666666667px #0022ff, 128px -276.6666666667px #11ff00, -139px -159.6666666667px #ff2f00, -151px 30.3333333333px #c8ff00, -212px -122.6666666667px #ff8400, -88px -259.6666666667px #7700ff, 149px -237.6666666667px #0033ff, -18px -228.6666666667px #aeff00, -167px -201.6666666667px #ccff00, -216px -196.6666666667px #00ffd9, 64px -188.6666666667px #00ff95, -158px -287.6666666667px #ff0d00, -238px -117.6666666667px #00c4ff, 194px -34.6666666667px #fff700, -73px -388.6666666667px #ff008c, -246px -189.6666666667px #bb00ff, -8px -410.6666666667px #0040ff, 214px -223.6666666667px #00ff15, 136px -357.6666666667px blue, 183px 4.3333333333px #00ff40, -38px 76.3333333333px #b700ff, -44px -167.6666666667px #00fff7, 70px -315.6666666667px #ff0015, 189px -249.6666666667px #00e6ff, 174px -150.6666666667px #ff0055, -160px -302.6666666667px #ffd900, -244px -200.6666666667px #26ff00, -26px 70.3333333333px #ff002b, 31px 5.3333333333px #4d00ff, -110px 31.3333333333px #00ffd0, -208px -326.6666666667px #7300ff, 218px -212.6666666667px #ff009d, 122px -344.6666666667px #eaff00, -223px 36.3333333333px #00ffcc, -234px -272.6666666667px #006aff, 73px -302.6666666667px #00ff8c, 248px -70.6666666667px #00ff62, -121px -357.6666666667px #00ffea, -199px -95.6666666667px #04ff00, -202px -255.6666666667px #004dff, -33px -206.6666666667px #0015ff, 136px -204.6666666667px #ddff00, 99px -128.6666666667px #3cff00, -193px -205.6666666667px #ff0059, -61px -337.6666666667px #00eaff, -233px -35.6666666667px #ff0033;
+            }
+        }
+        @-ms-keyframes bang {
+            to {
+                box-shadow: -209px -87.6666666667px #3300ff, 137px -70.6666666667px #ff0055, -81px -52.6666666667px #d5ff00, 84px -110.6666666667px #ff0004, 67px -412.6666666667px #ff1e00, 78px -333.6666666667px #0022ff, 128px -276.6666666667px #11ff00, -139px -159.6666666667px #ff2f00, -151px 30.3333333333px #c8ff00, -212px -122.6666666667px #ff8400, -88px -259.6666666667px #7700ff, 149px -237.6666666667px #0033ff, -18px -228.6666666667px #aeff00, -167px -201.6666666667px #ccff00, -216px -196.6666666667px #00ffd9, 64px -188.6666666667px #00ff95, -158px -287.6666666667px #ff0d00, -238px -117.6666666667px #00c4ff, 194px -34.6666666667px #fff700, -73px -388.6666666667px #ff008c, -246px -189.6666666667px #bb00ff, -8px -410.6666666667px #0040ff, 214px -223.6666666667px #00ff15, 136px -357.6666666667px blue, 183px 4.3333333333px #00ff40, -38px 76.3333333333px #b700ff, -44px -167.6666666667px #00fff7, 70px -315.6666666667px #ff0015, 189px -249.6666666667px #00e6ff, 174px -150.6666666667px #ff0055, -160px -302.6666666667px #ffd900, -244px -200.6666666667px #26ff00, -26px 70.3333333333px #ff002b, 31px 5.3333333333px #4d00ff, -110px 31.3333333333px #00ffd0, -208px -326.6666666667px #7300ff, 218px -212.6666666667px #ff009d, 122px -344.6666666667px #eaff00, -223px 36.3333333333px #00ffcc, -234px -272.6666666667px #006aff, 73px -302.6666666667px #00ff8c, 248px -70.6666666667px #00ff62, -121px -357.6666666667px #00ffea, -199px -95.6666666667px #04ff00, -202px -255.6666666667px #004dff, -33px -206.6666666667px #0015ff, 136px -204.6666666667px #ddff00, 99px -128.6666666667px #3cff00, -193px -205.6666666667px #ff0059, -61px -337.6666666667px #00eaff, -233px -35.6666666667px #ff0033;
+            }
+        }
+        @keyframes bang {
+            to {
+                box-shadow: -209px -87.6666666667px #3300ff, 137px -70.6666666667px #ff0055, -81px -52.6666666667px #d5ff00, 84px -110.6666666667px #ff0004, 67px -412.6666666667px #ff1e00, 78px -333.6666666667px #0022ff, 128px -276.6666666667px #11ff00, -139px -159.6666666667px #ff2f00, -151px 30.3333333333px #c8ff00, -212px -122.6666666667px #ff8400, -88px -259.6666666667px #7700ff, 149px -237.6666666667px #0033ff, -18px -228.6666666667px #aeff00, -167px -201.6666666667px #ccff00, -216px -196.6666666667px #00ffd9, 64px -188.6666666667px #00ff95, -158px -287.6666666667px #ff0d00, -238px -117.6666666667px #00c4ff, 194px -34.6666666667px #fff700, -73px -388.6666666667px #ff008c, -246px -189.6666666667px #bb00ff, -8px -410.6666666667px #0040ff, 214px -223.6666666667px #00ff15, 136px -357.6666666667px blue, 183px 4.3333333333px #00ff40, -38px 76.3333333333px #b700ff, -44px -167.6666666667px #00fff7, 70px -315.6666666667px #ff0015, 189px -249.6666666667px #00e6ff, 174px -150.6666666667px #ff0055, -160px -302.6666666667px #ffd900, -244px -200.6666666667px #26ff00, -26px 70.3333333333px #ff002b, 31px 5.3333333333px #4d00ff, -110px 31.3333333333px #00ffd0, -208px -326.6666666667px #7300ff, 218px -212.6666666667px #ff009d, 122px -344.6666666667px #eaff00, -223px 36.3333333333px #00ffcc, -234px -272.6666666667px #006aff, 73px -302.6666666667px #00ff8c, 248px -70.6666666667px #00ff62, -121px -357.6666666667px #00ffea, -199px -95.6666666667px #04ff00, -202px -255.6666666667px #004dff, -33px -206.6666666667px #0015ff, 136px -204.6666666667px #ddff00, 99px -128.6666666667px #3cff00, -193px -205.6666666667px #ff0059, -61px -337.6666666667px #00eaff, -233px -35.6666666667px #ff0033;
+            }
+        }
+        @-webkit-keyframes gravity {
+            to {
+                transform: translateY(200px);
+                -moz-transform: translateY(200px);
+                -webkit-transform: translateY(200px);
+                -o-transform: translateY(200px);
+                -ms-transform: translateY(200px);
+                opacity: 0;
+            }
+        }
+        @-moz-keyframes gravity {
+            to {
+                transform: translateY(200px);
+                -moz-transform: translateY(200px);
+                -webkit-transform: translateY(200px);
+                -o-transform: translateY(200px);
+                -ms-transform: translateY(200px);
+                opacity: 0;
+            }
+        }
+        @-o-keyframes gravity {
+            to {
+                transform: translateY(200px);
+                -moz-transform: translateY(200px);
+                -webkit-transform: translateY(200px);
+                -o-transform: translateY(200px);
+                -ms-transform: translateY(200px);
+                opacity: 0;
+            }
+        }
+        @-ms-keyframes gravity {
+            to {
+                transform: translateY(200px);
+                -moz-transform: translateY(200px);
+                -webkit-transform: translateY(200px);
+                -o-transform: translateY(200px);
+                -ms-transform: translateY(200px);
+                opacity: 0;
+            }
+        }
+        @keyframes gravity {
+            to {
+                transform: translateY(200px);
+                -moz-transform: translateY(200px);
+                -webkit-transform: translateY(200px);
+                -o-transform: translateY(200px);
+                -ms-transform: translateY(200px);
+                opacity: 0;
+            }
+        }
+        @-webkit-keyframes position {
+            0%, 19.9% {
+                margin-top: 10%;
+                margin-left: 40%;
+            }
+            20%, 39.9% {
+                margin-top: 40%;
+                margin-left: 30%;
+            }
+            40%, 59.9% {
+                margin-top: 20%;
+                margin-left: 70%;
+            }
+            60%, 79.9% {
+                margin-top: 30%;
+                margin-left: 20%;
+            }
+            80%, 99.9% {
+                margin-top: 30%;
+                margin-left: 80%;
+            }
+        }
+        @-moz-keyframes position {
+            0%, 19.9% {
+                margin-top: 10%;
+                margin-left: 40%;
+            }
+            20%, 39.9% {
+                margin-top: 40%;
+                margin-left: 30%;
+            }
+            40%, 59.9% {
+                margin-top: 20%;
+                margin-left: 70%;
+            }
+            60%, 79.9% {
+                margin-top: 30%;
+                margin-left: 20%;
+            }
+            80%, 99.9% {
+                margin-top: 30%;
+                margin-left: 80%;
+            }
+        }
+        @-o-keyframes position {
+            0%, 19.9% {
+                margin-top: 10%;
+                margin-left: 40%;
+            }
+            20%, 39.9% {
+                margin-top: 40%;
+                margin-left: 30%;
+            }
+            40%, 59.9% {
+                margin-top: 20%;
+                margin-left: 70%;
+            }
+            60%, 79.9% {
+                margin-top: 30%;
+                margin-left: 20%;
+            }
+            80%, 99.9% {
+                margin-top: 30%;
+                margin-left: 80%;
+            }
+        }
+        @-ms-keyframes position {
+            0%, 19.9% {
+                margin-top: 10%;
+                margin-left: 40%;
+            }
+            20%, 39.9% {
+                margin-top: 40%;
+                margin-left: 30%;
+            }
+            40%, 59.9% {
+                margin-top: 20%;
+                margin-left: 70%;
+            }
+            60%, 79.9% {
+                margin-top: 30%;
+                margin-left: 20%;
+            }
+            80%, 99.9% {
+                margin-top: 30%;
+                margin-left: 80%;
+            }
+        }
+        @keyframes position {
+            0%, 19.9% {
+                margin-top: 10%;
+                margin-left: 40%;
+            }
+            20%, 39.9% {
+                margin-top: 40%;
+                margin-left: 30%;
+            }
+            40%, 59.9% {
+                margin-top: 20%;
+                margin-left: 70%;
+            }
+            60%, 79.9% {
+                margin-top: 30%;
+                margin-left: 20%;
+            }
+            80%, 99.9% {
+                margin-top: 30%;
+                margin-left: 80%;
             }
         }
         h1{
             text-align: center;
         }
+
     </style>
 </head>
 <body id="body" class="">
 <div class="" style="padding: 10px">
     <div class="">
-        <h1>&#127876; WELCOME TO THE MAGIC WASM DECRYPTER! &#127876;</h1>
+        <h1>&#129668; WELCOME TO THE MAGIC WASM DECRYPTER! &#129668;</h1>
     </div>
     <div class=" py-2">
         <div id="inputs"></div>
@@ -234,6 +375,10 @@
                     height="20"/> Decrypter!
         </button>
         <div id="cs-result" style="margin-top: 10px"></div>
+    </div>
+    <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
     </div>
 </div>
 
